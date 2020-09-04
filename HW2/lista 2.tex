@@ -1,0 +1,234 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{listings}
+\usepackage[svgnames]{xcolor}
+\usepackage{tikz}
+
+\lstset{language=R,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	keywordstyle=\color{NavyBlue},
+	commentstyle=\color{YellowGreen},
+	stringstyle=\color{Crimson}
+}
+
+\setlength{\jot}{1.5ex}
+
+\title{Lista 2 de Econometria\\
+Diogo Wolff Surdi}
+\date{April 3, 2020}
+
+\begin{document}
+\maketitle
+
+\section*{Questão 1}
+
+\subsection*{(a)}
+\begin{equation*}
+(XX')'=(X')'X'=XX'
+\end{equation*}
+
+\subsection*{(b)}
+Primeiramente, note que
+\begin{equation*}
+[(X'X)^{-1}]'=[(X'X)']^{-1}=[X'(X')']^{-1}=(X'X)^{-1}
+\end{equation*}
+Com isso, temos que:
+
+\begin{equation*}
+N'=[X(X'X)^{-1}X']'=(X')'[(X'X)^{-1}]'X'=X(X'X)^{-1}X'=N
+\end{equation*}
+Para $M=I-N$, temos que:
+\begin{equation*}
+M'=(I-N)'=I'-N'=I-N=M
+\end{equation*}
+
+\section*{Questão 2}
+
+\subsection*{(a)}
+\textbf{TCL (Lindeberg-Levy; versão vetorial):} Seja $\{z_{i}\} \; i.i.d. \;$ com $\mathbb{E}[z_{i}]=\mu$ e $Var(z_{i})=\Sigma$. Então:
+
+\begin{equation*}
+\sqrt{n}(\bar{z}_{n}-\mu) \xrightarrow[d]{} N(0,\Sigma)
+\end{equation*}
+
+\subsection*{(b)}
+\textbf{LGN fraca:}
+
+\begin{equation*}
+\lim_{n \rightarrow \infty} \mathbb{E}[\bar{z}_{n}]= \mu ,\; 
+\lim_{n \rightarrow \infty} Var(\bar{z}_{n})=0 \Longrightarrow
+\bar{z}_{n} \xrightarrow[p]{} \mu 
+\end{equation*}
+
+\subsection*{(c)}
+Como pode se ver nas definições, a lei dos grandes números garante a convergência em probabilidade da média amostral à média teórica (esperança). Por sua vez, o teorema central do limite garante a convergência em distribuição da média amostral corrigida por $\sqrt{n}$ a uma distribuição normal.
+
+\section*{Questão 3}
+Como $\hat{\beta}_{1}$ é consistente, temos que $plim(\hat{\beta}_{1})=\beta_{1}$. Ademais, pela LGN, sabemos que $\bar{y}\xrightarrow[p]{}\mathbb{E}[y]$ e $\bar{x}\xrightarrow[p]{}\mathbb{E}[x]$. Com isso, $\hat{\beta}_{0}=\bar{y}+\hat{\beta}_{1}\bar{x}$ implica que $plim(\hat{\beta}_{0})$ existe, pois é função contínua de variáveis que possuem $plim$. Logo:
+
+\begin{equation*}
+plim(\hat{\beta}_{0})=plim(\bar{y}+\hat{\beta}_{1}\bar{x})=\mathbb{E}[y]+\beta_{1}\mathbb{E}[x]=\beta_{0}
+\end{equation*}
+
+\section*{Questão 4}
+
+\subsection*{(a)}
+Seja $y=X\hat{\beta}$. Nosso objetivo é encontrar
+\begin{equation*}
+b=\underset{\hat{\beta}_{0}}{argmin}(y-X\hat{\beta})'(y-X\hat{\beta})
+\end{equation*}
+Sabemos que $(y-X\hat{\beta})'(y-X\hat{\beta})=y'y-\hat{\beta}'X'y-
+y'X\hat{\beta}+\hat{\beta}'X'X\hat{\beta}=y'y-2y'X\hat{\beta}+\hat{\beta}'X'X\hat{\beta}$. Derivando em $\hat{\beta}$ encontramos que:
+\begin{equation*}
+\frac{\partial (y'X\hat{\beta})}{\partial\hat{\beta}}=X'y; \; 
+\frac{\partial (\hat{\beta}'X'X\hat{\beta})}{\partial\hat{\beta}}=2X'X\hat{\beta}
+\end{equation*}
+Igualando a derivada a 0, encotramos que $2X'y=2X'X\hat{\beta}$. Logo
+\begin{equation*}
+X'y=X'X\hat{\beta} \Longrightarrow \hat{\beta}=(X'X)^{-1}X'y
+\end{equation*}
+ 
+\subsection*{(b)}
+Basta provar que $plim \hat{\beta}=\beta$. Sabemos que $y=X\beta+\epsilon$, logo
+\begin{align*}
+\hat{\beta}&=(X'X)^{-1}X'(X\beta+\epsilon)\\
+&=(X'X)^{-1}X'X\beta+(X'X)^{-1}X'\epsilon\\
+&=\beta+(X'X)^{-1}X'\epsilon \; \therefore \;\\
+\end{align*}
+\begin{equation*}
+\hat{\beta}-\beta=(X'X)^{-1}X'\epsilon
+\end{equation*}
+Com isso, podemos reescrever essa equação em termos de médias amostrais:
+\begin{equation*}
+\hat{\beta}-\beta=\left(\frac{1}{n}X'X\right)^{-1}
+\left(\frac{1}{n}X'\epsilon\right)
+\end{equation*}
+\begin{equation*}
+plim(\hat{\beta})=\beta+\left(plim\frac{1}{n}X'X\right)^{-1}
+plim\left(\frac{1}{n}X'\epsilon\right)
+\end{equation*}
+Pela LGN, $\left(plim\frac{1}{n}X'X\right)^{-1}=S_{XX}^{-1}$. Ademais, $
+plim\left(\frac{1}{n}X'\epsilon\right)=\mathbb{E}[X'\epsilon]=0$. Logo, temos
+\begin{equation*}
+plim(\hat{\beta})=\beta+S_{XX}^{-1}\times0=\beta
+\end{equation*}
+
+\subsection*{(c)}
+Seja $A=(X'X)^{-1}X'$, e note que $AA'=(X'X)^{-1}X'[(X'X)^{-1}X']'
+=(X'X)^{-1}X'X(X'X)^{-1}=(X'X)^{-1}$ 
+\begin{align*}
+Var(\hat{\beta}|X)&=Var(\hat{\beta}-\beta|X)\\
+&=Var(A\epsilon|X)\\
+&=AVar(\epsilon|X)A'\\
+&=A\mathbb{E}[\epsilon\epsilon'|X]A'\\
+&=A(\sigma^2I_{n})A'\\
+&=\sigma^2AA'\\
+&=\sigma^2(X'X)^{-1}
+\end{align*}
+
+\subsection*{(d)}
+Temos que $\sqrt{n}(\hat{\beta}-\beta)=\left(\frac{1}{n}X'X\right)^{-1}
+\sqrt{n}\left(\frac{1}{n}X'\epsilon\right)$. Pelo TCL, $\sqrt{n}\left(\frac{1}{n}X'\epsilon\right) \xrightarrow[d]{}N(0,\sigma^2 S_{XX})$. Agora, basta utilizar o teorema de Slutsky.
+\begin{equation*}
+\sqrt{n}(\hat{\beta}-\beta)=\left(\frac{1}{n}X'X\right)^{-1}
+\sqrt{n}\left(\frac{1}{n}X'\epsilon\right) \xrightarrow[d]{} 
+S_{XX}^{-1}N(0,\sigma^2 S_{XX})=N(0,\sigma^2 S_{XX}^{-1})
+\end{equation*}
+
+\section*{Questão 5}
+Se funds e risctol são positivamente correlacionados, então o aumento de funds gerará não só um aumento direto em pctação como também um aumento direto em risctol, e esse aumento gerará um aumento secundário em pctação, levando a um aparente impacto maior de funds em pctação. Com isso, o coeficiente de inclinação de funds será sobreestimado. Desse modo, a estimação assintótica também será enviesada. Matematicamente, temos que $plim \hat{\beta}_{1}=\beta_{1}+\beta_{2}\frac{Cov(x_{1},x_{2})}{Var(x_{1})}$.
+
+\section*{Questão 6}
+\begin{lstlisting}[language=R]
+A <- matrix(
+c(0,1/4,1/8,1/4,1/8,1/10,1/8,1/10,1/10),
+ncol=3, nrow=3,
+byrow=TRUE
+)
+
+I <- diag(3)
+
+approx = I+A+A^2+A^3+A^4+A^5+A^6+A^7+A^8+A^9
+\end{lstlisting}
+A aproximação é:
+\begin{lstlisting}[language=R]
+approx
+
+> approx
+[,1]      [,2]      [,3]
+[1,] 1.0000000 0.3333321 0.1428571
+[2,] 0.3333321 1.1428571 0.1111111
+[3,] 0.1428571 0.1111111 1.1111111
+\end{lstlisting}
+O valor real é:
+\begin{lstlisting}[language=R]
+solve(I-A)
+
+> solve(I-A)
+[,1]      [,2]      [,3]
+[1,] 1.1086109 0.3386432 0.1916008
+[2,] 0.3386432 1.2610003 0.1871449
+[3,] 0.1916008 0.1871449 1.1585162
+\end{lstlisting}
+A aproximação tem precisão variada, entre 1 e 2 casas decimais.\\
+
+\section*{Questão 7}
+\subsection*{(a)}
+\begin{lstlisting}[language=R]
+library(foreign)
+dados <- read.dta('C:/.../wage1.dta')
+reg <- lm(wage ~ educ + exper + tenure, dados)
+Residuals <- resid(reg)
+hist(Residuals)
+\end{lstlisting}
+\begin{center}
+	\includegraphics*[scale=0.65]{1.png}
+\end{center}
+
+\subsection*{(b)}
+\begin{lstlisting}[language=R]
+lreg <- lm(log(wage) ~ educ + exper + tenure, dados)
+Residuals <- resid(lreg)
+hist(Residuals)
+\end{lstlisting}
+
+\begin{center}
+	\includegraphics*[scale=0.65]{2.png}
+\end{center}	
+
+\subsection*{(c)}
+\textbf{MLR.6:} O erro populacional é independente das variáveis do modelo e tem distribuição normal.\\\\
+Para averiguar qual das distribuições mais se aproxima de uma normal, vou utilizar um QQ-plot empírico e comparar qual aparenta maior semelhança.
+
+\begin{lstlisting}[language=R]
+reg <- lm(wage ~ educ + exper + tenure, dados)
+Residuals <- resid(reg)
+qqnorm(Residuals); qqline(Residuals)
+\end{lstlisting}
+\begin{center}
+	\includegraphics*[scale=0.7]{3.png}
+\end{center}
+
+\begin{lstlisting}[language=R]
+lreg <- lm(log(wage) ~ educ + exper + tenure, dados)
+lResiduals<- resid(lreg)
+qqnorm(lResiduals); qqline(lResiduals)
+\end{lstlisting}
+
+\begin{center}
+	\includegraphics*[scale=0.7]{4.png}
+\end{center}
+
+Os quantis da regressão log-linear são muito mais próximos dos quantis da normal do que os quantis da regressão linear. Com isso, a MLR.6 provavelmente é melhor satisfeita com o modelo log-linear.
+
+\end{document}
+
+
+

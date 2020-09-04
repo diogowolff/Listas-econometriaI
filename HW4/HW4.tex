@@ -1,0 +1,248 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{listings}
+\usepackage[svgnames]{xcolor}
+
+\lstset{language=R,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	keywordstyle=\color{NavyBlue},
+	commentstyle=\color{YellowGreen},
+	stringstyle=\color{Crimson}
+}
+
+\setlength{\jot}{1.5ex}
+
+\title{Lista 4\\
+Econometria\\
+Diogo Wolff Surdi}
+
+\begin{document}
+\maketitle 
+
+\section*{Questão 1}
+Temos por propriedade do somatório que:
+\begin{equation*}
+\sum_{i=1}^{n}(z_{i}-\bar{z})(x_{i}-\bar{x})=\sum_{i=1}^{n}z_{i}(x_{i}-\bar{x})
+\end{equation*}
+Sendo que vale a mesma transformação para $y$. Temos então a fórmula:
+\begin{equation*}
+\sum_{i=1}^{n}z_{i}(y_{i}-\bar{y})=\sum_{i=1}^{n}z_{i}y_{i}-\left(\sum_{i=1}^{n} z_{i}\right)\bar{y}
+\end{equation*}
+Note que o primeiro termo será a média de observações de $y$ tais que $z_{i}=1$ multiplicada pelo número de vezes que isso ocorre, enquanto o segundo será a média de $y$ multiplicada por esse mesmo número. Chamando tal média condicional de $\bar{y}_{1}$ e o número de ocorrências de $n_{1}$ temos:
+\begin{equation*}
+\sum_{i=1}^{n}z_{i}(y_{i}-\bar{y}) = n_{1}\bar{y}_{1}-n_{1}\bar{y}
+\end{equation*}
+Seja $n_{0}$ o número de observações de $z=0$; então, devemos ter $n_{0}+n_{1}=n$, e podemos escrever $\bar{y}$ como:
+\begin{equation*}
+\bar{y}=\frac{n_{0}}{n}\bar{y}_{0}+\frac{n_{1}}{n}\bar{y}_{1}
+\end{equation*}
+Com isso:
+\begin{equation*}
+\bar{y}_{1}-\bar{y}=\left[\frac{n-n_{1}}{n}\right]\bar{y}_{1}
+-\frac{n_{0}}{n}\bar{y}_{0}=\frac{n_{0}}{n}(\bar{y}_{1}-\bar{y}_{0})
+\end{equation*}
+E encontramos então que:
+\begin{equation*}
+n_{1}\bar{y}_{1}-n_{1}\bar{y} = n_{1}(\bar{y}_{1}-n_{1}\bar{y}) =
+\frac{n_{1}n_{0}}{n}(\bar{y}_{1}-\bar{y}_{0})
+\end{equation*}
+O mesmo vale para $x$, logo temos que:
+\begin{equation*}
+\hat{\beta}_{1}=\frac{\bar{y}_{1}-\bar{y}_{0}}{\bar{x}_{1}-\bar{x}_{0}}
+\end{equation*}
+
+\section*{Questão 2}
+
+\subsection*{(a)}
+Existem diversos fatores que não estão presentes na equação mas que podem afetar o salário mínimo, como previsões de atividade econômica, logo há correlação entre ele e o erro da regressão.
+
+\subsection*{(b)}
+O salário mínimo federal deve ser mais robusto do que o estadual, logo a performance nacional (contabilizada através do PIB) já deve tomar boa parte da possível correlação com o erro. Com isso, acredito que ele não estaria correlacionado.
+
+\subsection*{(c)}
+Devido à regra, aumentos no salário mínimo estadual devem seguir de algum modo os aumentos do salário mínimo federal. Como deduzimos que esse último não é correlacionado com o erro, então ele será uma boa variável instrumental.
+
+\section*{Questão 3}
+
+\subsection*{(a)}
+Temos a equação do livro:
+\begin{equation*}
+plim \hat{\beta}_{1}=\beta_{1} + \frac{Corr(z,u)}{Corr(z,x)}\frac{\sigma_{u}}{\sigma_{x}}
+\end{equation*}
+Com isso, um simples cálculo encontra que o viés será de $0.5$.
+
+\subsection*{(b)}
+Da segunda equação dada na questão, temos que a correlação entre $x$ e $u$ precisaria ser maior do que $\frac{1}{2}$ para o viés de MQO superar o viés de MQ2E.
+
+\section*{Questão 4}
+
+\subsection*{(a)}
+A equação se torna então:
+\begin{equation*}
+y_{t}=\beta_{0}+\beta_{1}(x_{t}-e_{t})+u_{t}=\beta_{0}+\beta_{1}x_{t}+u_{t}-\beta_{1}e_{t}=\beta_{0}+\beta_{1}x_{t}+v_{t}
+\end{equation*}
+Como $e_{t}$ e $x_{t}^*$ não são correlacionados, temos $\mathbb{E}[x_{t}e_{t}]=\mathbb{E}[(x_{t}^*+e_{t})e_{t}]=\mathbb{E}[(e_{t}^2)]=\sigma_{e}^2$. Temos então que $Cov(x_{t},v_{t})=Cov(x_{t},u_{t})-\beta_{1}Cov(x_{t},e_{t})=-\beta_{1}\sigma_{e}^2\;\textless \;0$ para $\beta_{1}\:\textgreater \;0$.
+
+\subsection*{(b)}
+Por hipótese, temos que $\mathbb{E}[x_{t-1}^*u_{t}]=\mathbb{E}[e_{t-1}u_{t}]=\mathbb{E}[e_{t-1}e_{t}]=0$, logo $\mathbb{E}[x_{t-1}u_{t}]=\mathbb{E}[x_{t-1}e_{t}]=0$. Com isso, temos $\mathbb{E}[x_{t-1}v_{t}]=\mathbb{E}[x_{t-1}u_{t}]-\beta_{1}\mathbb{E}[x_{t-1}e_{t}]=0$.
+
+\subsection*{(c)}
+É possível (e provável) que as variáveis sejam correlacionadas, dado que variáveis econômicas tendem a crescer. 
+
+\subsection*{(d)}
+Deveríamos tomar $x_{t-1}$ como variável instrumental para $x_{t}$.
+
+\section*{Questão 5}
+
+\subsection*{(a)}
+\begin{lstlisting}[language=R]
+library(foreign)
+dados <- read.dta('(...)/wage2.dta')
+
+> lm(log(wage) ~ sibs, dados)
+
+Call:
+lm(formula = log(wage) ~ sibs, data = dados)
+
+Coefficients:
+(Intercept)         sibs  
+6.8611      -0.0279  
+\end{lstlisting}
+A regressão diz que um irmão a mais causa uma queda de $2.8\%$ no salário.
+
+\subsection*{(b)}
+Como são as mais velhas, crianças que vieram primeiro podem acabar tendo maior prioridade para ensino superior, além de que com mais filhos a restrição orçamentária das famílias fica mais apertada.
+\begin{lstlisting}[language=R]
+> lm(educ ~ brthord, dados)
+
+Call:
+lm(formula = educ ~ brthord, data = dados)
+
+Coefficients:
+(Intercept)      brthord  
+14.1494      -0.2826  
+\end{lstlisting}
+
+\subsection*{(c)}
+\begin{lstlisting}[language=R]
+> summary(lm(educ ~ sibs + brthord, dados))
+
+Call:
+lm(formula = educ ~ sibs + brthord, data = dados)
+
+Residuals:
+Min      1Q  Median      3Q     Max 
+-5.1438 -1.6854 -0.6852  2.0090  5.9950 
+
+Coefficients:
+Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 14.29650    0.13329 107.260  < 2e-16 ***
+sibs        -0.15287    0.03987  -3.834 0.000135 ***
+brthord     -0.15267    0.05708  -2.675 0.007619 ** 
+\end{lstlisting}
+A estatística $t$ é de -2.675, logo rejeitamos a hipótese de $\pi_{2}=0$ e as hipóteses de identificação são válidas.
+
+\subsection*{(d)}
+\begin{lstlisting}[language=R]
+> summary(ivreg(log(wage) ~ educ + sibs | brthord + sibs, data = dados))
+
+Call:
+ivreg(formula = log(wage) ~ educ + sibs | brthord + sibs, data = dados)
+
+Residuals:
+Min       1Q   Median       3Q      Max 
+-1.84808 -0.26227  0.03841  0.29901  1.30836 
+
+Coefficients:
+Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 4.938528   1.055690   4.678 3.37e-06 ***
+educ        0.136994   0.074681   1.834   0.0669 .  
+sibs        0.002111   0.017372   0.122   0.9033  
+\end{lstlisting}
+
+\subsection*{(e)}
+\begin{lstlisting}[language=R]
+educhat <- fitted(lm(educ ~ sibs + brthord, dados))
+
+completeFun <- function(data, desiredCols) {
+completeVec <- complete.cases(data[, desiredCols])
+return(data[completeVec, ])
+}
+
+validos <- completeFun(dados, "brthord")
+
+> cor(teste, validos$sibs)
+[1] -0.9294818
+\end{lstlisting}
+A correlação negativa é bem forte, indicando um problema de multicolinearidade.
+
+\section*{Questão 6}
+
+\subsection*{(a)}
+\begin{lstlisting}[language=R]
+ lm(i3 ~ inf, dados[-1, ])
+
+Call:
+lm(formula = i3 ~ inf, data = dados[-1, ])
+
+Coefficients:
+(Intercept)          inf  
+2.3208       0.6981  
+\end{lstlisting}
+
+\subsection*{(b)}
+\begin{lstlisting}[language=R]
+library(AER)
+
+> ivreg(i3 ~ inf | inf_1, data = dados)
+
+Call:
+ivreg(formula = i3 ~ inf | inf_1, data = dados)
+
+Coefficients:
+(Intercept)          inf  
+1.5426       0.9025  
+\end{lstlisting}
+Com a nova regressão, o coeficiente em relação à inflação não é estatisticamente diferente de 1, logo um aumento na inflação poderia levar a um aumento de igual magnitude na taxa de juros.
+
+\subsection*{(c)}
+\begin{lstlisting}[language=R]
+> lm(ci3 ~ cinf, dados)
+
+Call:
+lm(formula = ci3 ~ cinf, data = dados)
+
+Coefficients:
+(Intercept)         cinf  
+0.02296      0.22118 
+\end{lstlisting}
+A estimativa é muito menor.
+
+\subsection*{(d)}
+\begin{lstlisting}[language=R]
+atual <- dados$cinf[3:56]
+passado <- dados$cinf[2:55]
+
+> lm(atual ~ passado)
+
+Call:
+lm(formula = atual ~ passado)
+
+Coefficients:
+(Intercept)      passado  
+0.06358     -0.01028  
+\end{lstlisting}
+O coeficiente é quase nulo, logo há pouca correlação entre os dois e não podemos utilizar como variável instrumental.
+
+\end{document}
+
+
+
